@@ -14,6 +14,7 @@ Caso queira navegar por tópicos, aqui está os tópicos abordados:
 * **[Configurando Typescript](#typescript)**
 * **[Inicio do projeto com Express](#start)**
 * **[Trabalhando com TypeORM](#typeorm)**
+* **[Views](#views)**
 * **[Resultado](#results)**
 * **[Conclusão](#thankyou)**
 
@@ -335,13 +336,224 @@ Em `up` criaremos nossa tabela, já em `down` iremos deletar.
 ficando assim:
 
 ```js
+import {MigrationInterface, QueryRunner, Table} from "typeorm";
+
+export class User1603254408159 implements MigrationInterface {
+
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    queryRunner.createTable(new Table({
+      name: 'users',
+      columns: [
+        {
+          name: 'id',
+          type: 'integer',
+          unsigned: true,
+          isPrimary: true,
+          isGenerated: true,
+          generationStrategy: 'increment',
+        },
+        {
+          name: 'name',
+          type: 'varchar',
+        },
+        {
+          name: 'age',
+          type: 'decimal',
+        },
+      ]
+    }))
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    queryRunner.dropTable('users');
+  }
+}
 ```
 
+Aqui criei uma tabela chamada `users`, com as colunas, `id`, `name`, `age`, em formato de objeto, onde:
+
+`id` é auto-increment do tipo `integer`.
+
+`name` é do tipo `varchar` e será preenchido na requisição.
+
+`age` é do tipo `decimal` e também será preenchido na requisição de criação de usuário.
+
+## Rodando as Migrations
+
+Usando a `CLI` do **TypeORM**, usamos o seguinte comando:
+
+usando npm:
+```bash
+npx typeorm migration:run
+```
+
+ou usando yarn:
+```bash
+yarn typeorm migration:run
+```
+
+e conforme foi configurado o arquivo `ormconfig.json` na propriedade `database`, será criado um arquivo chamando `database.sqlite` na pasta `database`, logo abaixo das migrations e do `connection.ts`.
+
+Para mais detalhes de como trabalhar com migration no **TypeORM** acesse a documentação [aqui](https://typeorm.io/#/migrations).
 
 ## Trabalhando com Repository
 
+`Repository` é apenas um tipo de gerenciado de Entidades mas com operações limitadas uma uma `Entity` concreta.
+
+Você pode acessa um `repository` usando `getRepository()` e passado a `Entity` que foi criado, no caso o model `User`.
+
+```js
+const userRepository = getRepository(User);
+```
+
+um exemplo de uso é na criação de um usuário:
+
+```js
+async create(request: Request, response: Response) {
+    const { name, age } = request.body;
+
+    const userRepository = getRepository(User);
+
+    const data = {
+      name,
+      age,
+    };
+
+    const user = userRepository.create(data);
+
+    await userRepository.save(user);
+
+    return response.status(201).json(user);
+  }
+```
+
+que você pode encontrar no `UserController.ts`, [aqui]().
+
+Para mais detalher de como usar os `Repository` do **TypeORM**, acesse a documentação [aqui](https://typeorm.io/#/working-with-repository).
+
 ## Metodos Find
+
+Para fazer uma chamada a um banco de dados usando **TypeORM** basicamente você irá usar o `find()`.
+
+como na listagem de todos os usuários:
+
+```js
+async index(response: Response) {
+    const userRepository = getRepository(User);
+
+    const users = await userRepository.find();
+
+    const userRender = UserView.renderMany(users);
+
+    return response.status(200).json(userRender);
+  }
+```
+
+onde usamos somente:
+
+```js
+const users = await userRepository.find();
+```
+
+sem passa nada a `find()`, e isso nos retornará todas as informações do banco de dados.
+
+já na listagem de um unico usuário:
+
+```js
+async show(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const userRepository = getRepository(User);
+
+    const user = await userRepository.findOne(id);
+
+    return response.status(200).json(user);
+  }
+```
+
+temos:
+
+```js
+const user = await userRepository.findOne(id);
+```
+
+temos o `findOne()` que nos retornara somente uma assossiação da tabela, aqui é passado o `id`, que terá o retorno de um unico usuário que possui o `id` igual ao que foi passado.
+
+você pode encontrar o código em `UserController.ts`, [aqui]().
+
+e para mais detalhes sobre `find`, acesse a documentação [aqui](https://typeorm.io/#/find-options).
+
+## <div id="views" /> Views
+
+Agora vou falar sobre as `Views` que apareceram na listagem de usuários.
+
+## Uso das Views
+
+Usar views pode ser util para retornar dados depois de uma requisição, pois em alguns casos você não irá querer retornar todos os dados que a chamada ao banco de dados trás, como no nosso projeto, por exemplo, aqui quando é feita uma requisição para listar todos os usuários, é feita uma chamada ao banco, que acaba trazendo todas as informações, no caso, `id`, `name` e `age`, mas eu quero retornar somente os nomes, então é usado as views para filtrar as informações retornar ao usuário somente o que você realmente quer retornar.
+
+o arquivo `users_view.ts` está assim:
+
+```js
+import User from "../models/User";
+
+export default {
+  render(user: User) {
+    return {
+      name: user.name
+    }
+  },
+
+  renderMany(users: User[]) {
+    return users.map(user => this.render(user))
+  }
+}
+```
+
+Aqui temos duas funções, `render` e `renderMany` que irão tratar os dados, `render` irá receber um usuário com todos os dados e retornar somente o `name`, já o `renderMany` irá tratar um array de usuários, percorrendo cada um e chamando a função `render` para tratar cada usuário que está sendo percorrido.
 
 ## <div id="results" /> Resultado
 
+ E agora chagamos ao resultado.
+
+ Começamos rodando nossa aplicação:
+
+ usando npm:
+ ```bash
+ npm run dev
+ ```
+
+ ou yarn:
+ ```bash
+ yarn dev
+ ```
+
+ Usando o **Insomnia** para fazer as requisições, começamos criando um usuário:
+
+ ![user-create]()
+
+ Temos o seguinte resultado após a criação:
+
+ ![result-user-create]()
+
+ Agora vendo as `Views` entrando em ação iremos listar todos os usuários:
+
+ ![list-user]()
+
+ Temos esse resultado:
+
+ ![result-list-user]()
+
+ E listando somente um usuário, com o `id` `6`, por exemplo, temos:
+
+ ![list-user]()
+
+ Com esse resultado:
+
+![result-list-user]()
+
+
 ## <div id="thankyou" /> Conclusão
+
+Se você chegou aqui, muito obrigado =)
+
+Como considerações, posso dizer que o **TypeORM** tem muitas coisas que podem facilitar o desenvolvimento, assim como outras ferramentas, e ele não se limita a esses exemplo, o **TypeORM** tem uma documentação bem atrativa e com diversos exemplo e casos de uso, caso tenha interesse em conhecer mais, você pode acessar a documentação completa do **TypeORM** [aqui](https://typeorm.io/#/).
