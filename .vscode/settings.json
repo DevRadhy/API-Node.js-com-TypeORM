@@ -1,0 +1,11 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "database": "${workspaceFolder:orm}/src/database/database.sqlite",
+      "name": "detabase"
+    }
+  ],
+  "sqltools.useNodeRuntime": true
+}

@@ -1,0 +1,5 @@
+# Resourses
+node_modules
+
+# Database
+src/database/database.sqlite
