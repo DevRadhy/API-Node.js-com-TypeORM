@@ -97,6 +97,16 @@ Aqui temos algumas configurações para o **TypeORM**, seguindo a documentação
 
 Aqui `type` é o banco de dados que está sendo usando.
 
-Em `database` iremos passar o path do bando de dados 
+Em `database` iremos passar o path do bando de dados.
 
-para mais detalhes você pode acessar [aqui](link).
+Já os outros como o próprio nome diz `migrations` é onde você irá passar o path das migrations e `entities` é onde você irá passar o path dos models.
+
+para mais detalhes você pode acessar [aqui](https://typeorm.io/#/using-ormconfig).
+
+## Migrations
+
+## Trabalhando com Repository
+
+## Metodos Find
+
+## Connection
