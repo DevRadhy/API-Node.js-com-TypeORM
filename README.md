@@ -37,7 +37,7 @@ também estou usando outras tecnologias:
 
 O Projeto foi criado no seguinte formato:
 
-![setup](link)
+![setup](https://user-images.githubusercontent.com/50425715/96940358-e9d2d580-14a5-11eb-820e-fe0619812fa7.png)
 
 ## Instalação
 
@@ -125,7 +125,7 @@ Aqui irei mostrar quais foram as configurações usadas com o **Typescript**.
 }
 ```
 
-O arquivo não teve muitas mudanças como você pode ver e encontrar [aqui](link).
+O arquivo não teve muitas mudanças como você pode ver e encontrar [aqui](https://github.com/DevRadhy/API-Node.js-com-TypeORM/blob/master/tsconfig.json).
 
 Só foi alterado algumas opções:
 
@@ -191,7 +191,7 @@ routes.post('/user', UserController.create);
 export default routes;
 ```
 
-Aqui foi importado de dentro do **express** o `Router` para a criação das rotas, e temos a importação do nosso **Controller**, `UserController`, que você pode encontrar [aqui](link).
+Aqui foi importado de dentro do **express** o `Router` para a criação das rotas, e temos a importação do nosso **Controller**, `UserController.ts`, que você pode encontrar [aqui](https://github.com/DevRadhy/API-Node.js-com-TypeORM/blob/master/src/controllers/UserController.ts).
 
 ## Server.ts
 
@@ -479,7 +479,7 @@ const user = await userRepository.findOne(id);
 
 temos o `findOne()` que nos retornara somente uma assossiação da tabela, aqui é passado o `id`, que terá o retorno de um unico usuário que possui o `id` igual ao que foi passado.
 
-você pode encontrar o código em `UserController.ts`, [aqui]().
+você pode encontrar o código em `UserController.ts`, [aqui](https://github.com/DevRadhy/API-Node.js-com-TypeORM/blob/master/src/controllers/UserController.ts).
 
 e para mais detalhes sobre `find`, acesse a documentação [aqui](https://typeorm.io/#/find-options).
 
@@ -529,27 +529,29 @@ Aqui temos duas funções, `render` e `renderMany` que irão tratar os dados, `r
 
  Usando o **Insomnia** para fazer as requisições, começamos criando um usuário:
 
- ![user-create]()
+ ![user-create](https://user-images.githubusercontent.com/50425715/96940457-2c94ad80-14a6-11eb-99b5-a483342bc905.png)
 
  Temos o seguinte resultado após a criação:
 
- ![result-user-create]()
+ ![result-user-create](https://user-images.githubusercontent.com/50425715/96940490-3cac8d00-14a6-11eb-8112-04985d8c09ec.png)
 
  Agora vendo as `Views` entrando em ação iremos listar todos os usuários:
 
- ![list-user]()
+ ![list-user](https://user-images.githubusercontent.com/50425715/96940554-61086980-14a6-11eb-98f0-6c477e2edfef.png)
 
  Temos esse resultado:
 
- ![result-list-user]()
+ ![result-list-user](https://user-images.githubusercontent.com/50425715/96940575-6fef1c00-14a6-11eb-81e4-738b4f751675.png)
+
 
  E listando somente um usuário, com o `id` `6`, por exemplo, temos:
 
- ![list-user]()
+ ![list-user](https://user-images.githubusercontent.com/50425715/96940586-7ed5ce80-14a6-11eb-978b-7f445f20b361.png)
 
  Com esse resultado:
 
-![result-list-user]()
+![result-list-user](https://user-images.githubusercontent.com/50425715/96940622-99a84300-14a6-11eb-94d4-a587001df91f.png)
+
 
 
 ## <div id="thankyou" /> Conclusão
