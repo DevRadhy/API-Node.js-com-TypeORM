@@ -4,7 +4,7 @@
 
 ## Introdução
 
-Intrudução ao **TypeORM**, aqui irei mostrar como foi a minha impressão usando o **ORM**, então para esse projeto criei uma simples **API** de criação e listagem de usuários.
+Introdução ao **TypeORM**, aqui irei mostrar como foi a minha impressão usando o **ORM**, então para esse projeto criei uma simples **API** de criação e listagem de usuários.
 
 Esse projeto irá abordar sobre **Migrations**, e arquitetura **MVC**.
 
@@ -91,7 +91,7 @@ npm install typeorm
 }
 ```
 
-Esse arquivo possui alguns scripts, para uso da `cli.js` do typeorm e para inicar o projeto com **ts-node-dev**.
+Esse arquivo possui alguns scripts, para uso da `cli.js` do typeorm e para iniciar o projeto com **ts-node-dev**.
 
 ## <div id="typescript" /> Configurando Typescript
 
@@ -102,23 +102,23 @@ Aqui irei mostrar quais foram as configurações usadas com o **Typescript**.
 ```json
 {
   "compilerOptions": {
-    /* Basic Options */
+    // Basic Options
     "target": "es2017",
     "module": "commonjs",
     "allowJs": true,
 
-    /* Strict Type-Checking Options */
+    // Strict Type-Checking Options
     "strict": true,
     "strictPropertyInitialization": false,
 
-    /* Module Resolution Options */
+    // Module Resolution Options
     "esModuleInterop": true,
 
-    /* Experimental Options */
+    // Experimental Options
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
 
-    /* Advanced Options */
+    // Advanced Options
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   }
@@ -133,7 +133,7 @@ Só foi alterado algumas opções:
 
 `strictPropertyInitialization` foi adicionado e alterado para `false`, para permitir a inicialização de propriedades sem atribuir algum valor a elas. ( O padrão é `true` )
 
-`experimentalDecorators` e `emitDecoratorMetadata` foram adicionados e atribuidos como `true` para permitir o uso de **Decorators**, que será usado pelo **TypeORM**. ( O padrão é `false` )
+`experimentalDecorators` e `emitDecoratorMetadata` foram adicionados e atribuídos como `true` para permitir o uso de **Decorators**, que será usado pelo **TypeORM**. ( O padrão é `false` )
 
 ## <div id="start" /> Inicio do projeto com Express
 
@@ -165,7 +165,7 @@ app.use(routes);
 export default app;
 ```
 
-No `app.ts` temos também a importção das rotas e da conxão com o **TypeORM**.
+No `app.ts` temos também a importação das rotas e da conexão com o **TypeORM**.
 
 e temos o `use` do **express** que que permitirá ele a reconhecer `JSON` e usar as rotas.
 
@@ -182,7 +182,7 @@ const routes = Router();
 // Rota de listagem de usuários
 routes.get('/users', UserController.index);
 
-// Rota de listagem de um unico usuário
+// Rota de listagem de um único usuário
 routes.get('/users/:id', UserController.show);
 
 // Rota de criação de usuário
@@ -195,7 +195,7 @@ Aqui foi importado de dentro do **express** o `Router` para a criação das rota
 
 ## Server.ts
 
-Aqui basicamento só importtamos e iniciamos nosso `app`:
+Aqui basicamente só importamos e iniciamos nosso `app`:
 
 ```js
 import app from './app';
@@ -237,7 +237,7 @@ para mais detalhes você pode acessar a documentação [aqui](https://typeorm.io
 
 ## Connection
 
-Agora iremos conectar com o **TypeORM** para começarmos a utilizalo.
+Agora iremos conectar com o **TypeORM** para começarmos a útilizar.
 
 Nesse projeto eu criei um arquivo `connection.ts` na pasta `database` com o seguinte conteúdo:
 
@@ -261,7 +261,7 @@ para mais detalhes acesse a documentação [aqui](https://typeorm.io/#/connectio
 
 `Entity` é uma classe que mapeia para a DB ( ou coleção quando usamos MongoDB ).
 
-Para criar uma `Entity`, você pode atirbuir `@Entity` a uma **Class**.
+Para criar uma `Entity`, você pode atribuir `@Entity` a uma **Class**.
 
 ### Entity Columns
 
@@ -285,7 +285,7 @@ export default class User {
 }
 ```
 
-Podemos ver que a mais alguns tipos de `Entity Columns` atribuidos, e para saber mais sobre `Entity` e `Column` você pode acessar a documentação [aqui](https://typeorm.io/#/entities).
+Podemos ver que a mais alguns tipos de `Entity Column` atribuídos, e para saber mais sobre `Entity` e `Column` você pode acessar a documentação [aqui](https://typeorm.io/#/entities).
 
 ## Migrations
 
@@ -293,7 +293,7 @@ Em produção, trabalhando com um time você precisa ter um projeto sincronizado
 
 ## Migrations usando CLI
 
-Usando a `CLI` do **TypeORM** iremos criar nossas migrations, esse projeto usa somente uma **migration** para a table de criação de usuário.
+Usando a `CLI` do **TypeORM** iremos criar nossas migrations, esse projeto usa somente uma **migration** para a tabela de criação de usuário.
 
 Para criar uma nova migration usando a `CLI` do **TypeORM** basta usar o seguinte comando: 
 
@@ -372,7 +372,7 @@ export class User1603254408159 implements MigrationInterface {
 
 Aqui criei uma tabela chamada `users`, com as colunas, `id`, `name`, `age`, em formato de objeto, onde:
 
-`id` é auto-increment do tipo `integer`.
+`id` é auto increment do tipo `integer`.
 
 `name` é do tipo `varchar` e será preenchido na requisição.
 
@@ -398,9 +398,9 @@ Para mais detalhes de como trabalhar com migration no **TypeORM** acesse a docum
 
 ## Trabalhando com Repository
 
-`Repository` é apenas um tipo de gerenciado de Entidades mas com operações limitadas uma uma `Entity` concreta.
+`Repository` é apenas um tipo de gerenciador de Entidades mas com operações limitadas uma uma `Entity` concreta.
 
-Você pode acessa um `repository` usando `getRepository()` e passado a `Entity` que foi criado, no caso o model `User`.
+Você pode acessar um `repository` usando `getRepository()` e passando a `Entity` que foi criado, no caso o model `User`.
 
 ```js
 const userRepository = getRepository(User);
@@ -427,9 +427,9 @@ async create(request: Request, response: Response) {
   }
 ```
 
-que você pode encontrar no `UserController.ts`, [aqui]().
+Você pode encontrar esse código no `UserController.ts`, [aqui]().
 
-Para mais detalher de como usar os `Repository` do **TypeORM**, acesse a documentação [aqui](https://typeorm.io/#/working-with-repository).
+Para mais detalhes de como usar os `Repository` do **TypeORM**, acesse a documentação [aqui](https://typeorm.io/#/working-with-repository).
 
 ## Metodos Find
 
@@ -455,9 +455,9 @@ onde usamos somente:
 const users = await userRepository.find();
 ```
 
-sem passa nada a `find()`, e isso nos retornará todas as informações do banco de dados.
+sem passar nada a `find()`, e isso nos retornará todas as informações do banco de dados.
 
-já na listagem de um unico usuário:
+já na listagem de um único usuário:
 
 ```js
 async show(request: Request, response: Response) {
@@ -477,7 +477,7 @@ temos:
 const user = await userRepository.findOne(id);
 ```
 
-temos o `findOne()` que nos retornara somente uma assossiação da tabela, aqui é passado o `id`, que terá o retorno de um unico usuário que possui o `id` igual ao que foi passado.
+temos o `findOne()` que nos retornará somente uma associação da tabela, aqui é passado o `id`, que terá o retorno de um único usuário que possui o `id` igual ao que foi passado.
 
 você pode encontrar o código em `UserController.ts`, [aqui](https://github.com/DevRadhy/API-Node.js-com-TypeORM/blob/master/src/controllers/UserController.ts).
 
@@ -489,7 +489,7 @@ Agora vou falar sobre as `Views` que apareceram na listagem de usuários.
 
 ## Uso das Views
 
-Usar views pode ser util para retornar dados depois de uma requisição, pois em alguns casos você não irá querer retornar todos os dados que a chamada ao banco de dados trás, como no nosso projeto, por exemplo, aqui quando é feita uma requisição para listar todos os usuários, é feita uma chamada ao banco, que acaba trazendo todas as informações, no caso, `id`, `name` e `age`, mas eu quero retornar somente os nomes, então é usado as views para filtrar as informações retornar ao usuário somente o que você realmente quer retornar.
+Usar views pode ser útil para retornar dados depois de uma requisição, pois em alguns casos você não irá querer retornar todos os dados que a chamada ao banco de dados trás, como no nosso projeto, por exemplo, aqui quando é feita uma requisição para listar todos os usuários, é feita uma chamada ao banco de dados, que acaba retornando todas as informações dos usuários, no caso, `id`, `name` e `age`, mas eu quero retornar somente os nomes, então é usado as views para filtrar as informações e retornar ao usuário somente o que você realmente deseja.
 
 o arquivo `users_view.ts` está assim:
 
@@ -535,7 +535,7 @@ Aqui temos duas funções, `render` e `renderMany` que irão tratar os dados, `r
 
  ![result-user-create](https://user-images.githubusercontent.com/50425715/96940490-3cac8d00-14a6-11eb-8112-04985d8c09ec.png)
 
- Agora vendo as `Views` entrando em ação iremos listar todos os usuários:
+ Agora com as `Views` entrando em ação iremos listar todos os usuários:
 
  ![list-user](https://user-images.githubusercontent.com/50425715/96940554-61086980-14a6-11eb-98f0-6c477e2edfef.png)
 
@@ -556,6 +556,6 @@ Aqui temos duas funções, `render` e `renderMany` que irão tratar os dados, `r
 
 ## <div id="thankyou" /> Conclusão
 
-Se você chegou aqui, muito obrigado =)
+Se você chegou até aqui, muito obrigado =)
 
-Como considerações, posso dizer que o **TypeORM** tem muitas coisas que podem facilitar o desenvolvimento, assim como outras ferramentas, e ele não se limita a esses exemplo, o **TypeORM** tem uma documentação bem atrativa e com diversos exemplo e casos de uso, caso tenha interesse em conhecer mais, você pode acessar a documentação completa do **TypeORM** [aqui](https://typeorm.io/#/).
+Como considerações, posso dizer que o **TypeORM** tem muitas coisas que podem facilitar o desenvolvimento, assim como outras ferramentas, e ele não se limita a esses exemplos, o **TypeORM** tem uma documentação bem atrativa e com diversos exemplos e casos de uso, caso tenha interesse em conhecer mais, você pode acessar a documentação completa do **TypeORM** [aqui](https://typeorm.io/#/).
