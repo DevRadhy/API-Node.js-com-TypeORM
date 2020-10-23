@@ -167,7 +167,7 @@ export default app;
 
 No `app.ts` temos também a importação das rotas e da conexão com o **TypeORM**.
 
-e temos o `use` do **express** que que permitirá ele a reconhecer `JSON` e usar as rotas.
+e temos o `use` do **express** que permitirá ele reconhecer e trabalhar com `JSON`, e usar as `routes`.
 
 ## Routes.ts
 
